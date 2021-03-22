@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: frontend
 spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
   selector:
     app: frontend
-  ports:
-  - protocol: TCP
-    port: 8080
-  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -17,7 +17,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 3      
+  replicas: 1      
   selector:
     matchLabels:
       app: frontend
@@ -26,7 +26,6 @@ spec:
       labels:
         app: frontend
     spec:
-      hostname: frontend
       containers:
       - name: frontend
         image: springcommunity/spring-petclinic-angular
